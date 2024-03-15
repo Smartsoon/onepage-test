@@ -1,0 +1,20 @@
+.infrastructure-button {
+  padding: 8px 16px;
+  background-color: rgba(58, 129, 87, 0.86);
+  color: #FFFFFF;
+  border-radius: 6px;
+  border: transparent;
+  cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    background-color: rgba(34, 124, 76, 0.7);
+    transition: 0.5s;
+  }
+  &--danger {
+    background-color: rgba(166, 50, 50, 0.86);
+    &:hover {
+      background-color: rgba(182, 74, 74, 0.86);
+      transition: 0.5s;
+    }
+  }
+}

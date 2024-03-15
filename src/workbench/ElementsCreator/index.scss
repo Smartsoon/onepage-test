@@ -1,0 +1,11 @@
+.elements-creator {
+  display: flex;
+  padding-top: 20px;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  height: 100vh;
+  &__layer {
+    margin-top: 20px;
+  }
+}
