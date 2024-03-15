@@ -8,9 +8,9 @@ import {BlocksSelector} from "../BlocksSelector";
 import { v4 } from 'uuid'
 import {ButtonProps} from "../../components-blocks/Button";
 import button from '../../blocks/Button.json'
-import {useObserver} from "mobx-react-lite";
+import {observer} from "mobx-react-lite";
 
-export const ElementsCreator: React.FC<ElementsCreatorProp> = () => {
+export const ElementsCreator: React.FC<ElementsCreatorProp> = observer(() => {
     const store = useStores()
     const onCreateButton = () => {
         const id = v4()
@@ -31,7 +31,7 @@ export const ElementsCreator: React.FC<ElementsCreatorProp> = () => {
         store.removeAllComponents('layerId')
     }
 
-    return useObserver(() => <div className={'elements-creator'}>
+    return <div className={'elements-creator'}>
         <InfrastructureButton
             label={'Add Button Components'}
             onClick={onCreateButton}
@@ -53,5 +53,5 @@ export const ElementsCreator: React.FC<ElementsCreatorProp> = () => {
                 })
             }
         </div>
-    </div>)
-}
+    </div>
+})

@@ -9,8 +9,9 @@ import {BlockGeneratedObject} from "../../types/blocks";
 import {WithLabel} from "../../components-infrastructure/WithLabel";
 import {Select} from "../../components-infrastructure/Size";
 import {Input} from "../../components-infrastructure/Input";
+import {observer} from "mobx-react-lite";
 
-export const BlocksSelector: React.FC<BlocksSelectorProp> = ({
+export const BlocksSelector: React.FC<BlocksSelectorProp> = observer(({
     blockId,
     layerId
 }) => {
@@ -55,4 +56,4 @@ export const BlocksSelector: React.FC<BlocksSelectorProp> = ({
             return <></>
 
     }
-}
+})

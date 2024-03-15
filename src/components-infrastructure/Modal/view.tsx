@@ -1,36 +1,70 @@
-import React, {CSSProperties} from "react";
-import {ModalProps} from "./types";
+import React, { CSSProperties, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import './index.scss'
-import {createPortal} from "react-dom";
 
-export const Modal: React.FC<ModalProps> = ({
-    title,
-    children,
-    anchorId,
-    setIsModalOpen
-}) => {
-    const anchorElement = document.getElementById(anchorId);
-    const anchorRect = anchorElement?.getBoundingClientRect();
-    const modalStyle: CSSProperties  = anchorRect ? {
-        position: 'absolute',
-        top: `${anchorRect.top}px`,
-        left: `${anchorRect.left - 320}px`,
-        zIndex: 1000,
-    } : {};
+export const Modal: React.FC<{
+    title: string;
+    children: React.ReactNode;
+    anchorId: string;
+    setIsModalOpen: (open: boolean) => void;
+}> = ({ title, children, anchorId, setIsModalOpen }) => {
+    const [modalStyle, setModalStyle] = useState<CSSProperties>({});
+
+    useEffect(() => {
+        const anchorElement = document.getElementById(anchorId);
+        const updateModalPosition = () => {
+            const anchorRect = anchorElement?.getBoundingClientRect();
+            if (anchorRect) {
+                setModalStyle({
+                    position: 'absolute',
+                    top: `${anchorRect.top + window.scrollY - 250}px`,
+                    left: `${anchorRect.left + window.scrollX - 320}px`,
+                    zIndex: 1000,
+                });
+            }
+        };
+
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.type === "attributes") {
+                    updateModalPosition();
+                }
+            });
+        });
+
+        if (anchorElement) {
+            observer.observe(anchorElement, {
+                attributes: true,
+                childList: true,
+                subtree: true,
+            });
+
+            updateModalPosition();
+        }
+
+        return () => observer.disconnect();
+    }, [anchorId]);
+
     function createModalRoot() {
-        const newModalRoot = document.createElement('div');
-        newModalRoot.setAttribute('id', 'modal-root');
-        document.body.appendChild(newModalRoot);
-        return newModalRoot;
+        let modalRoot = document.getElementById('modal-root');
+        if (!modalRoot) {
+            modalRoot = document.createElement('div');
+            modalRoot.setAttribute('id', 'modal-root');
+            document.body.appendChild(modalRoot);
+        }
+        return modalRoot;
     }
-    const modalRoot = document.getElementById('modal-root') || createModalRoot();
-    return createPortal(<div className={'modal'} style={modalStyle}>
-        <div className={'modal__header'}>
-            <h2>{title}</h2>
-            <div onClick={() => setIsModalOpen(false)} className={'close-button'}/>
-        </div>
-        <div className={'modal__content'}>
-            {children}
-        </div>
-    </div>, modalRoot)
-}
+
+    const modalRoot = createModalRoot();
+
+    return createPortal(
+        <div className="modal" style={modalStyle}>
+            <div className="modal__header">
+                <h2>{title}</h2>
+                <div onClick={() => setIsModalOpen(false)} className="close-button" />
+            </div>
+            <div className="modal__content">{children}</div>
+        </div>,
+        modalRoot
+    );
+};

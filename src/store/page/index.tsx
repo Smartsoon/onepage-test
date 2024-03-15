@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import {makeAutoObservable, set} from "mobx";
 
 type ComponentProps = Record<string, any>
 
@@ -65,10 +65,10 @@ class PageStore {
     updateComponentProp(layerName: string, componentName: string, propName: string, propValue: any) {
         if (layerName in this.pageLayout && componentName in this.pageLayout[layerName]) {
             const currentProps = this.pageLayout[layerName][componentName].props;
-            this.pageLayout[layerName][componentName].props = {
+            set(this.pageLayout[layerName][componentName], "props", {
                 ...currentProps,
                 [propName]: propValue
-            };
+            });
         }
     }
 
