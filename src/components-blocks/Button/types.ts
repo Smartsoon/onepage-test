@@ -8,6 +8,7 @@ export interface ButtonProps {
     label?: string
     /**
      * @propLabel Action
+     * @defaultValue www.google.com
      * @control input
      */
     action?: string

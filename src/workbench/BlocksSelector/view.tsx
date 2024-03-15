@@ -20,12 +20,18 @@ export const BlocksSelector: React.FC<BlocksSelectorProp> = observer(({
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const blockType = pageLayout[layerId][blockId]
     const isProps = blockType && 'props' in blockType
+    const onModalToggle = () => {
+        if (isModalOpen) {
+            console.log(`Component name: ${blockType.name}`, `Component ID: ${blockId}`, `Component data: ${blockType.props}`)
+        }
+        setIsModalOpen(!isModalOpen)
+    }
     if (!isProps) return <></>
     switch (blockType.name) {
         case 'Button':
             return <>
-                <Button {...blockType.props} onClick={() => setIsModalOpen(!isModalOpen)} id={blockId}/>
-                {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} anchorId={blockId} title={`${blockType.name}`}>
+                <Button {...blockType.props} onClick={onModalToggle} id={blockId}/>
+                {isModalOpen && <Modal setIsModalOpen={onModalToggle} anchorId={blockId} title={`${blockType.name}`}>
                     <div>
                         <p>Component ID: </p>
                         <span>{blockId}</span>

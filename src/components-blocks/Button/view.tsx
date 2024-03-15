@@ -19,7 +19,7 @@ export const Button: React.FC<ButtonProps & SharedBlock> = ({
         `block-button__justify-${justify}`,
         `block-button__align-${align}`
     );
-    return <a id={id} onClick={onClick} className={classNames} href={action}>
+    return <a id={id} onClick={onClick} className={classNames}>
         {label}
     </a>
 }
