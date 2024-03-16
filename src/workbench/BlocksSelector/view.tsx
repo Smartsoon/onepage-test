@@ -36,38 +36,45 @@ export const BlocksSelector: React.FC<BlocksSelectorProp> = observer(({
                 {isModalOpen && <Modal setIsModalOpen={onModalToggle} anchorId={blockId} title={`${blockType.name}`}>
                     {
                         (button as BlockGeneratedObject[]).map((prop) => {
-                            return prop.control !== 'inbox' ? <div key={prop.name} className={'item-wrapper'}>
-                                <WithLabel label={prop.label}>
-                                    {
-                                        prop.control === 'select' ?
-                                            <Select options={prop.options || []}
-                                                    active={blockType.props[prop.name]}
-                                                    onChange={(value) => {
-                                                        store.updateComponentProp(layerId, blockId, prop.name, value)
-                                                    }}
-                                            /> : prop.control === 'input' ?
-                                                <Input value={blockType.props[prop.name]}
-                                                       onChange={(value) => {
-                                                           store.updateComponentProp(layerId, blockId, prop.name, value)
-                                                       }}
-                                                /> : <></>
-                                    }
-                                </WithLabel>
-                            </div> : <></>
+                            return <React.Fragment key={prop.name}>
+                                {
+                                    prop.control !== 'inbox' ? <div className={'item-wrapper'}>
+                                        <WithLabel label={prop.label}>
+                                            {
+                                                prop.control === 'select' ?
+                                                    <Select options={prop.options || []}
+                                                            active={blockType.props[prop.name]}
+                                                            onChange={(value) => {
+                                                                store.updateComponentProp(layerId, blockId, prop.name, value)
+                                                            }}
+                                                    /> : prop.control === 'input' ?
+                                                        <Input value={blockType.props[prop.name]}
+                                                               onChange={(value) => {
+                                                                   store.updateComponentProp(layerId, blockId, prop.name, value)
+                                                               }}
+                                                        /> : <></>
+                                            }
+                                        </WithLabel>
+                                    </div> : <></>
+                                }
+                            </React.Fragment>
                         })
                     }
                     <div className={'alignment-modal-data'}>
                         {
                             (button as BlockGeneratedObject[]).map((prop, index) => {
-                                return prop.control === 'inbox' ?
-                                    <InBox key={prop.name}
-                                           type={prop.name as 'justify' | 'align'}
-                                           active={blockType.props[prop.name]}
-                                           options={prop.options as Alignment[]}
-                                           onChange={(value) => {
-                                               store.updateComponentProp(layerId, blockId, prop.name, value)
-                                           }}
-                                    /> : <></>
+                                return <React.Fragment key={prop.name}>
+                                    {
+                                        prop.control === 'inbox' ?
+                                            <InBox type={prop.name as 'justify' | 'align'}
+                                                   active={blockType.props[prop.name]}
+                                                   options={prop.options as Alignment[]}
+                                                   onChange={(value) => {
+                                                       store.updateComponentProp(layerId, blockId, prop.name, value)
+                                                   }}
+                                            /> : <></>
+                                    }
+                                </React.Fragment>
                             })
                         }
                     </div>
