@@ -62,7 +62,7 @@ export const BlocksSelector: React.FC<BlocksSelectorProp> = observer(({
                     }
                     <div className={'alignment-modal-data'}>
                         {
-                            (button as BlockGeneratedObject[]).map((prop, index) => {
+                            (button as BlockGeneratedObject[]).map((prop) => {
                                 return <React.Fragment key={prop.name}>
                                     {
                                         prop.control === 'inbox' ?

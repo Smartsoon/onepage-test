@@ -1,5 +1,3 @@
-import {ReactNode} from "react";
-
 export type IconName =
     'justify-start' |
     'justify-center' |
