@@ -5,11 +5,12 @@ import {useStores} from "../../store/page/context";
 import {Button} from "../../components-blocks/Button";
 import { Modal } from "../../components-infrastructure/Modal";
 import button from '../../blocks/Button.json'
-import {BlockGeneratedObject} from "../../types/blocks";
+import {Alignment, BlockGeneratedObject} from "../../types/blocks";
 import {WithLabel} from "../../components-infrastructure/WithLabel";
 import {Select} from "../../components-infrastructure/Size";
 import {Input} from "../../components-infrastructure/Input";
 import {observer} from "mobx-react-lite";
+import {InBox} from "../../components-infrastructure/InBox";
 
 export const BlocksSelector: React.FC<BlocksSelectorProp> = observer(({
     blockId,
@@ -26,36 +27,50 @@ export const BlocksSelector: React.FC<BlocksSelectorProp> = observer(({
         }
         setIsModalOpen(!isModalOpen)
     }
+
     if (!isProps) return <></>
     switch (blockType.name) {
         case 'Button':
             return <>
                 <Button {...blockType.props} onClick={onModalToggle} id={blockId}/>
                 {isModalOpen && <Modal setIsModalOpen={onModalToggle} anchorId={blockId} title={`${blockType.name}`}>
-                    <div>
-                        <p>Component ID: </p>
-                        <span>{blockId}</span>
-                    </div>
                     {
-                        (button as BlockGeneratedObject[]).map((prop, index) => {
-                            return <WithLabel key={index} label={prop.label}>
-                                {
-                                    prop.control === 'select' ?
-                                        <Select options={prop.options || []}
-                                                active={blockType.props[prop.name]}
-                                                onChange={(value) => {
-                                                    store.updateComponentProp(layerId, blockId, prop.name, value)
-                                                }}
-                                        /> :
-                                        <Input value={blockType.props[prop.name]}
-                                               onChange={(value) => {
-                                                   store.updateComponentProp(layerId, blockId, prop.name, value)
-                                               }}
-                                        />
-                                }
-                            </WithLabel>
+                        (button as BlockGeneratedObject[]).map((prop) => {
+                            return prop.control !== 'inbox' ? <div key={prop.name} className={'item-wrapper'}>
+                                <WithLabel label={prop.label}>
+                                    {
+                                        prop.control === 'select' ?
+                                            <Select options={prop.options || []}
+                                                    active={blockType.props[prop.name]}
+                                                    onChange={(value) => {
+                                                        store.updateComponentProp(layerId, blockId, prop.name, value)
+                                                    }}
+                                            /> : prop.control === 'input' ?
+                                                <Input value={blockType.props[prop.name]}
+                                                       onChange={(value) => {
+                                                           store.updateComponentProp(layerId, blockId, prop.name, value)
+                                                       }}
+                                                /> : <></>
+                                    }
+                                </WithLabel>
+                            </div> : <></>
                         })
                     }
+                    <div className={'alignment-modal-data'}>
+                        {
+                            (button as BlockGeneratedObject[]).map((prop, index) => {
+                                return prop.control === 'inbox' ?
+                                    <InBox key={prop.name}
+                                           type={prop.name as 'justify' | 'align'}
+                                           active={blockType.props[prop.name]}
+                                           options={prop.options as Alignment[]}
+                                           onChange={(value) => {
+                                               store.updateComponentProp(layerId, blockId, prop.name, value)
+                                           }}
+                                    /> : <></>
+                            })
+                        }
+                    </div>
                 </Modal>}
             </>
         default:

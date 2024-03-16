@@ -1,7 +1,8 @@
 .modal {
   width: 280px;
   height: auto;
-  padding: 10px;
+  padding: 14px;
+  border-radius: 8px;
   background-color: #FFFFFF;
   box-shadow: 0 40px 140px 0 #00000040;
   &__header {
@@ -9,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 12px;
     h2 {
       font-size: 16px;
       color: #303036;
@@ -49,6 +51,5 @@
   &__content {
     display: flex;
     flex-direction: column;
-    padding: 20px;
   }
 }

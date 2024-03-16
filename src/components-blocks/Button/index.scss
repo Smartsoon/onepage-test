@@ -35,13 +35,13 @@
     transition: 0.5s;
   }
   &__justify-start {
-    margin-left: auto;
+    margin-right: auto;
   }
   &__justify-center {
     margin: 0 auto;
   }
   &__justify-end {
-    margin-right: auto;
+    margin-left: auto;
   }
   &__align-start {
     align-self: flex-start;

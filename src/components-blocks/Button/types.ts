@@ -1,3 +1,5 @@
+import {Alignment} from "../../types/blocks";
+
 //@entrie Button
 export interface ButtonProps {
     /**
@@ -19,15 +21,15 @@ export interface ButtonProps {
      */
     size?: 'XS' | 'S' | 'M' | 'L' | 'XL'
     /**
-     * @propLabel Align
-     * @control select
-     * @defaultValue center
-     */
-    align?: 'start' | 'center' |  'end'
-    /**
      * @propLabel Justify
-     * @control select
+     * @control inbox
      * @defaultValue center
      */
-    justify?: 'start' | 'center' |  'end'
+    justify?: Alignment
+    /**
+     * @propLabel Align
+     * @control inbox
+     * @defaultValue center
+     */
+    align?: Alignment
 }

@@ -6,7 +6,9 @@ export interface SharedBlock {
 export interface BlockGeneratedObject {
     name: string,
     label: string,
-    control: "select" | 'input'
+    control: "select" | 'input' | 'inbox'
     options?: string[],
     value?: string,
 }
+
+export type Alignment = "start" | "center" | "end"

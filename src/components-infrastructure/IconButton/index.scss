@@ -1,0 +1,18 @@
+.icon-button {
+  display: inline-flex;
+  cursor: pointer;
+  padding: 8px 11px;
+
+  &:hover {
+    background-color: rgba(108, 108, 137, 0.06);
+  }
+
+  &--active {
+    cursor: auto;
+    background-color: rgba(108, 108, 137, 0.10);
+
+    &:hover {
+      background-color: rgba(108, 108, 137, 0.10);
+    }
+  }
+}

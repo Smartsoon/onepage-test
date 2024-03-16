@@ -1,8 +1,9 @@
 .with-label {
   display: flex;
   flex-direction: column;
+  margin-bottom: 10px;
   span {
-    padding: 0 0 10px 2px;
+    padding: 10px 2px;
     color: #2D2D2D;
     font-weight: 700;
   }

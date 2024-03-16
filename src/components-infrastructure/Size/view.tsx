@@ -8,9 +8,9 @@ export const Select: React.FC<SelectProps> = ({
     active
 }) => {
     return <div className={'infrastructure-select'}>
-        {options.map((option, index) => {
+        {options.map((option) => {
             const activeClass = active === option && 'infrastructure-select__option--active'
-            return <div key={index} onClick={() => onChange(option)} className={`infrastructure-select__option ${activeClass}`}>
+            return <div key={option} onClick={() => onChange(option)} className={`infrastructure-select__option ${activeClass}`}>
                 {option}
             </div>
         })}

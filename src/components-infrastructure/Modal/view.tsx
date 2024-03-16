@@ -17,7 +17,7 @@ export const Modal: React.FC<{
             if (anchorRect) {
                 setModalStyle({
                     position: 'absolute',
-                    top: `${anchorRect.top + window.scrollY - 250}px`,
+                    top: `${anchorRect.top + window.scrollY - 180}px`,
                     left: `${anchorRect.left + window.scrollX - 320}px`,
                     zIndex: 1000,
                 });
